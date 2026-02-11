@@ -158,7 +158,6 @@ function applyOrder() {
 
     status.style.opacity = "1";
 
-    // Ẩn sau 2 giây
     setTimeout(() => {
         status.style.opacity = "0";
     }, 2000);
@@ -184,7 +183,13 @@ document.getElementById("bitInput").addEventListener("input", function () {
         }
 
         this.value = "";
+        this.focus(); // giữ focus sau mỗi lần nhập
     }
+});
+
+// focus ngay khi load trang
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("bitInput").focus();
 });
 </script>
 
