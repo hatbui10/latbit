@@ -129,8 +129,14 @@ button:focus {
     <h2>Lật Bit</h2>
 
     <div>
-        <div>Nhập 5 bit:</div>
-        <input type="text" id="bitInput" maxlength="5" placeholder="VD: 10101">
+    <div>Nhập 5 bit:</div>
+    <input 
+        type="tel" 
+        id="bitInput" 
+        maxlength="5" 
+        inputmode="numeric"
+        pattern="[0-1]*"
+        placeholder="VD: 10101">
     </div>
 
 
@@ -293,6 +299,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 </body>
 </html>
+
 
 
 
