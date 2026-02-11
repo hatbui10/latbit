@@ -135,61 +135,76 @@ button:focus {
 
 
 <script>
+let BIT_LENGTH = 5;   // 👉 đổi thành 10 hoặc 15 nếu muốn
 let flipOrder = [];
 let currentIndex = 0;
 
-function applyOrder() {
-    const input = document.getElementById("orderInput").value;
-    const status = document.getElementById("statusMsg");
+const bitInput = document.getElementById("bitInput");
+const resultOutput = document.getElementById("resultOutput");
+const orderInput = document.getElementById("orderInput");
+const statusMsg = document.getElementById("statusMsg");
 
-    flipOrder = input.split(",")
+/* Cập nhật maxlength theo BIT_LENGTH */
+bitInput.setAttribute("maxlength", BIT_LENGTH);
+
+/* Áp dụng thứ tự lật */
+function applyOrder() {
+
+    flipOrder = orderInput.value
+        .split(",")
         .map(n => parseInt(n.trim()))
-        .filter(n => n >= 1 && n <= 5);
+        .filter(n => !isNaN(n) && n >= 1 && n <= BIT_LENGTH);
 
     currentIndex = 0;
 
     if (flipOrder.length === 0) {
-        status.innerText = "⚠ Thứ tự không hợp lệ!";
-        status.style.color = "red";
+        statusMsg.innerText = "⚠ Thứ tự không hợp lệ!";
+        statusMsg.style.color = "red";
     } else {
-        status.innerText = "✔ Đã áp dụng thứ tự mới!";
-        status.style.color = "#4da6ff";
+        statusMsg.innerText = "✔ Đã áp dụng thứ tự mới!";
+        statusMsg.style.color = "#4da6ff";
     }
 
-    status.style.opacity = "1";
+    statusMsg.style.opacity = "1";
 
     setTimeout(() => {
-        status.style.opacity = "0";
+        statusMsg.style.opacity = "0";
     }, 2000);
 }
 
-document.getElementById("bitInput").addEventListener("input", function () {
-    let value = this.value;
+/* Xử lý nhập bit */
+bitInput.addEventListener("input", function () {
 
-    if (value.length === 5 && /^[01]{5}$/.test(value)) {
+    let value = this.value.trim();
+
+    const regex = new RegExp(`^[01]{${BIT_LENGTH}}$`);
+
+    if (regex.test(value)) {
+
         if (flipOrder.length === 0) return;
 
         let bits = value.split("");
 
         let flipPos = flipOrder[currentIndex] - 1;
+
         bits[flipPos] = bits[flipPos] === "0" ? "1" : "0";
 
-        document.getElementById("resultOutput").value = bits.join("");
+        resultOutput.value = bits.join("");
 
         currentIndex++;
-
         if (currentIndex >= flipOrder.length) {
-            currentIndex = 0;
+            currentIndex = 0;   // quay vòng
         }
 
         this.value = "";
-        this.focus(); // giữ focus sau mỗi lần nhập
+        this.focus();
     }
 });
 
-// focus ngay khi load trang
-document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("bitInput").focus();
+/* Khi load trang */
+document.addEventListener("DOMContentLoaded", function () {
+    applyOrder();   // tự áp dụng thứ tự ban đầu
+    bitInput.focus();
 });
 </script>
 
