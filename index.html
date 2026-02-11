@@ -115,7 +115,9 @@ button:focus {
     box-shadow: 0 0 10px #ffcc00;
     transition: 0.3s;
 }
-
+.container1 {
+    display: none;
+}
 
 
 
@@ -165,13 +167,17 @@ button:focus {
      
      <div id="flipMessage" style="margin-top:10px; font-weight:600; color:#4da6ff;"></div>
 
-
+<div class="container1">
     <div>
         <div>Thứ tự lật (vd: 5,3,1,1,2):</div>
         <input type="text" id="orderInput" value="5-3-1-1-2-4-5-3-1-1-2-4-5-2-4-3-1-2-4-2-3-4-2-1-2-4-1-5-3-2-5-3-1-1-2-3">
         <button onclick="applyOrder()">Áp dụng</button>
         <div id="statusMsg" style="margin-top:8px;font-size:14px;"></div>
     </div>
+  </div>   
+
+
+        
 </div>
 
 
@@ -299,6 +305,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 </body>
 </html>
+
 
 
 
