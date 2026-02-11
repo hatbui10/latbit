@@ -60,6 +60,40 @@ input:focus {
     border-color: #4da6ff;
     box-shadow: 0 0 12px rgba(77, 166, 255, 0.6);
 }
+#statusMsg {
+    transition: opacity 0.3s ease;
+    opacity: 0;
+}
+button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+
+    background: linear-gradient(135deg, #4da6ff, #0066ff);
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+
+    transition: all 0.25s ease;
+    box-shadow: 0 6px 15px rgba(0, 102, 255, 0.4);
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 102, 255, 0.6);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 10px rgba(0, 102, 255, 0.4);
+}
+
+button:focus {
+    outline: none;
+}
 
 
 
@@ -106,11 +140,13 @@ let currentIndex = 0;
 
 function applyOrder() {
     const input = document.getElementById("orderInput").value;
-    flipOrder = input.split(",").map(n => parseInt(n.trim())).filter(n => n >= 1 && n <= 5);
+    const status = document.getElementById("statusMsg");
+
+    flipOrder = input.split(",")
+        .map(n => parseInt(n.trim()))
+        .filter(n => n >= 1 && n <= 5);
 
     currentIndex = 0;
-
-    const status = document.getElementById("statusMsg");
 
     if (flipOrder.length === 0) {
         status.innerText = "⚠ Thứ tự không hợp lệ!";
@@ -119,6 +155,13 @@ function applyOrder() {
         status.innerText = "✔ Đã áp dụng thứ tự mới!";
         status.style.color = "#4da6ff";
     }
+
+    status.style.opacity = "1";
+
+    // Ẩn sau 2 giây
+    setTimeout(() => {
+        status.style.opacity = "0";
+    }, 2000);
 }
 
 document.getElementById("bitInput").addEventListener("input", function () {
@@ -130,7 +173,6 @@ document.getElementById("bitInput").addEventListener("input", function () {
         let bits = value.split("");
 
         let flipPos = flipOrder[currentIndex] - 1;
-
         bits[flipPos] = bits[flipPos] === "0" ? "1" : "0";
 
         document.getElementById("resultOutput").value = bits.join("");
@@ -138,15 +180,12 @@ document.getElementById("bitInput").addEventListener("input", function () {
         currentIndex++;
 
         if (currentIndex >= flipOrder.length) {
-            currentIndex = 0; // quay vòng
+            currentIndex = 0;
         }
 
         this.value = "";
     }
 });
-
-// tự áp dụng lần đầu khi load
-applyOrder();
 </script>
 
 </body>
