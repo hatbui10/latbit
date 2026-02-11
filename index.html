@@ -70,68 +70,83 @@ input:focus {
 </style>
 </head>
 <body>
+
+
+
+
 <div class="container">
-<h2>Lật Bit</h2>
+    <h2>Lật Bit</h2>
 
-<div>
-    <div>Nhập 5 bit:</div>
-    <input type="text" id="bitInput" maxlength="5" placeholder="VD: 10101">
+    <div>
+        <div>Nhập 5 bit:</div>
+        <input type="text" id="bitInput" maxlength="5" placeholder="VD: 10101">
+    </div>
+
+    <div>
+        <div>Kết quả:</div>
+        <input type="text" id="resultOutput" readonly>
+    </div>
+
+    <div>
+        <div>Thứ tự lật (vd: 5,3,1,1,2):</div>
+        <input type="text" id="orderInput" value="5,3,1,1,2,4,5,3,1">
+        <button onclick="applyOrder()">Áp dụng</button>
+        <div id="statusMsg" style="margin-top:8px;font-size:14px;"></div>
+    </div>
 </div>
 
-<div>
-    <div>Kết quả:</div>
-    <input type="text" id="resultOutput" readonly>
-</div>
 
-<div>
-    <div>Thứ tự lật (vd: 5,3,1,1,2):</div>
-    <input type="text" id="orderInput" value="5,3,1,1,2,4,5,3,1">
-</div>
-</div>
+
+
+
 
 <script>
-let count = 0;
+let flipOrder = [];
+let currentIndex = 0;
 
-const bitInput = document.getElementById("bitInput");
-const resultOutput = document.getElementById("resultOutput");
-const orderInput = document.getElementById("orderInput");
+function applyOrder() {
+    const input = document.getElementById("orderInput").value;
+    flipOrder = input.split(",").map(n => parseInt(n.trim())).filter(n => n >= 1 && n <= 5);
 
-window.onload = () => bitInput.focus();
+    currentIndex = 0;
 
-bitInput.addEventListener("input", function() {
-    let value = bitInput.value.replace(/[^01]/g, "");
-    bitInput.value = value;
+    const status = document.getElementById("statusMsg");
 
-    if (value.length === 5) {
-        processInput(value);
+    if (flipOrder.length === 0) {
+        status.innerText = "⚠ Thứ tự không hợp lệ!";
+        status.style.color = "red";
+    } else {
+        status.innerText = "✔ Đã áp dụng thứ tự mới!";
+        status.style.color = "#4da6ff";
+    }
+}
+
+document.getElementById("bitInput").addEventListener("input", function () {
+    let value = this.value;
+
+    if (value.length === 5 && /^[01]{5}$/.test(value)) {
+        if (flipOrder.length === 0) return;
+
+        let bits = value.split("");
+
+        let flipPos = flipOrder[currentIndex] - 1;
+
+        bits[flipPos] = bits[flipPos] === "0" ? "1" : "0";
+
+        document.getElementById("resultOutput").value = bits.join("");
+
+        currentIndex++;
+
+        if (currentIndex >= flipOrder.length) {
+            currentIndex = 0; // quay vòng
+        }
+
+        this.value = "";
     }
 });
 
-function processInput(input) {
-
-    let flipOrder = orderInput.value
-        .split(",")
-        .map(x => parseInt(x.trim()))
-        .filter(x => x >= 1 && x <= 5);
-
-    if (flipOrder.length === 0) {
-        resultOutput.value = "";
-        bitInput.value = "";
-        return;
-    }
-
-    let flipIndex = count % flipOrder.length;
-    let flipPos = flipOrder[flipIndex] - 1;
-
-    let bits = input.split("");
-    bits[flipPos] = bits[flipPos] === "0" ? "1" : "0";
-
-    resultOutput.value = bits.join("");
-
-    count++;
-    bitInput.value = "";
-    bitInput.focus();
-}
+// tự áp dụng lần đầu khi load
+applyOrder();
 </script>
 
 </body>
