@@ -95,7 +95,26 @@ button:focus {
     outline: none;
 }
 
+.resultBox {
+    width: 45px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 18px;
+}
 
+.originalBox{
+    width: 45px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.highlight {
+    background-color: #ffcc00;
+    color: black;
+    box-shadow: 0 0 10px #ffcc00;
+    transition: 0.3s;
+}
 
 
 
@@ -106,8 +125,6 @@ button:focus {
 <body>
 
 
-
-
 <div class="container">
     <h2>Lật Bit</h2>
 
@@ -116,10 +133,32 @@ button:focus {
         <input type="text" id="bitInput" maxlength="5" placeholder="VD: 10101">
     </div>
 
-    <div>
-        <div>Kết quả:</div>
-        <input type="text" id="resultOutput" readonly>
+
+<div>
+    <div>5 bit vừa nhập:</div>
+    <div style="display:flex; gap:6px;">
+        <input type="text" class="originalBox" readonly>
+        <input type="text" class="originalBox" readonly>
+        <input type="text" class="originalBox" readonly>
+        <input type="text" class="originalBox" readonly>
+        <input type="text" class="originalBox" readonly>
     </div>
+</div>
+
+
+    <div>
+    <div>Kết quả:</div>
+    <div id="resultBoxes" style="display:flex; gap:6px;">
+        <input type="text" class="resultBox" readonly>
+        <input type="text" class="resultBox" readonly>
+        <input type="text" class="resultBox" readonly>
+        <input type="text" class="resultBox" readonly>
+        <input type="text" class="resultBox" readonly>
+    </div>
+     
+     
+     <div id="flipMessage" style="margin-top:10px; font-weight:600; color:#4da6ff;"></div>
+
 
     <div>
         <div>Thứ tự lật (vd: 5,3,1,1,2):</div>
@@ -140,9 +179,14 @@ let flipOrder = [];
 let currentIndex = 0;
 
 const bitInput = document.getElementById("bitInput");
-const resultOutput = document.getElementById("resultOutput");
+const resultBoxes = document.querySelectorAll(".resultBox");
 const orderInput = document.getElementById("orderInput");
 const statusMsg = document.getElementById("statusMsg");
+const originalBoxes = document.querySelectorAll(".originalBox");
+const flipMessage = document.getElementById("flipMessage");
+
+
+
 
 /* Cập nhật maxlength theo BIT_LENGTH */
 bitInput.setAttribute("maxlength", BIT_LENGTH);
@@ -185,15 +229,54 @@ bitInput.addEventListener("input", function () {
 
         let bits = value.split("");
 
-        let flipPos = flipOrder[currentIndex] - 1;
+        // 1️⃣ Copy sang 5 ô hiển thị gốc
+        for (let i = 0; i < BIT_LENGTH; i++) {
+            originalBoxes[i].value = bits[i];
+        }
 
-        bits[flipPos] = bits[flipPos] === "0" ? "1" : "0";
+       // 2️⃣ Lật bit theo thứ tự
+let flipPos = flipOrder[currentIndex] - 1;
 
-        resultOutput.value = bits.join("");
+let oldValue = bits[flipPos];
+bits[flipPos] = bits[flipPos] === "0" ? "1" : "0";
+let newValue = bits[flipPos];
+
+
+// Xoá highlight cũ
+resultBoxes.forEach(box => box.classList.remove("highlight"));
+
+// Highlight ô bị lật
+resultBoxes[flipPos].classList.add("highlight");
+
+// Tự xoá highlight sau 500ms
+setTimeout(() => {
+    resultBoxes[flipPos].classList.remove("highlight");
+}, 2500);
+
+
+
+
+        // 3️⃣ Hiển thị kết quả lật
+        for (let i = 0; i < BIT_LENGTH; i++) {
+            resultBoxes[i].value = bits[i];
+        }
+
+
+
+flipMessage.innerText =
+    `Đã lật vị trí: ${flipPos + 1} (${oldValue} → ${newValue})`;
+
+flipMessage.style.opacity = "1";
+
+setTimeout(() => {
+    flipMessage.style.opacity = "0";
+}, 2000);
+
+
 
         currentIndex++;
         if (currentIndex >= flipOrder.length) {
-            currentIndex = 0;   // quay vòng
+            currentIndex = 0;
         }
 
         this.value = "";
@@ -210,5 +293,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 </body>
 </html>
+
+
 
 
