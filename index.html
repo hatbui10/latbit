@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Lật Bit Gọn Nhẹ</title>
+<style>
+    body {
+        font-family: Arial;
+        text-align: center;
+        margin-top: 40px;
+    }
+    input {
+        padding: 8px;
+        font-size: 18px;
+        width: 180px;
+        text-align: center;
+        margin: 5px;
+    }
+</style>
+</head>
+<body>
+
+<h2>Lật Bit</h2>
+
+<div>
+    <div>Nhập 5 bit:</div>
+    <input type="text" id="bitInput" maxlength="5" placeholder="VD: 10101">
+</div>
+
+<div>
+    <div>Kết quả:</div>
+    <input type="text" id="resultOutput" readonly>
+</div>
+
+<div>
+    <div>Thứ tự lật (vd: 5,3,1,1,2):</div>
+    <input type="text" id="orderInput" value="5,3,1,1,2,4,5,3,1">
+</div>
+
+<script>
+let count = 0;
+
+const bitInput = document.getElementById("bitInput");
+const resultOutput = document.getElementById("resultOutput");
+const orderInput = document.getElementById("orderInput");
+
+window.onload = () => bitInput.focus();
+
+bitInput.addEventListener("input", function() {
+    let value = bitInput.value.replace(/[^01]/g, "");
+    bitInput.value = value;
+
+    if (value.length === 5) {
+        processInput(value);
+    }
+});
+
+function processInput(input) {
+
+    let flipOrder = orderInput.value
+        .split(",")
+        .map(x => parseInt(x.trim()))
+        .filter(x => x >= 1 && x <= 5);
+
+    if (flipOrder.length === 0) {
+        resultOutput.value = "";
+        bitInput.value = "";
+        return;
+    }
+
+    let flipIndex = count % flipOrder.length;
+    let flipPos = flipOrder[flipIndex] - 1;
+
+    let bits = input.split("");
+    bits[flipPos] = bits[flipPos] === "0" ? "1" : "0";
+
+    resultOutput.value = bits.join("");
+
+    count++;
+    bitInput.value = "";
+    bitInput.focus();
+}
+</script>
+
+</body>
+</html>
+
