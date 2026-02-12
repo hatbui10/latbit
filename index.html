@@ -206,10 +206,10 @@ bitInput.setAttribute("maxlength", BIT_LENGTH);
 /* Áp dụng thứ tự lật */
 function applyOrder() {
 
-    flipOrder = orderInput.value
-        .split(",")
-        .map(n => parseInt(n.trim()))
-        .filter(n => !isNaN(n) && n >= 1 && n <= BIT_LENGTH);
+   flipOrder = orderInput.value
+    .split(/[-,]/)
+    .map(n => parseInt(n.trim()))
+    .filter(n => !isNaN(n) && n >= 1 && n <= BIT_LENGTH);
 
     currentIndex = 0;
 
@@ -305,6 +305,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 </body>
 </html>
+
+
 
 
 
