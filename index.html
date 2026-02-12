@@ -27,8 +27,9 @@
 }
 
 h2 {
-    margin-bottom: 20px;
-    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 8px;
+        font-weight: 600;
 }
 
 .container div {
@@ -119,6 +120,9 @@ button:focus {
     display: none;
 }
 
+.resultSection {
+    margin-top: 25px;
+}
 
 
 
@@ -128,10 +132,10 @@ button:focus {
 
 
 <div class="container">
-    <h2>Lật Bit</h2>
+   
 
     <div>
-    <div>Nhập 5 bit:</div>
+    <h2>Nhập 5 bit:</h2>
     <input 
         type="tel" 
         id="bitInput" 
@@ -142,9 +146,10 @@ button:focus {
     </div>
 
 
-<div>
-    <div>5 bit vừa nhập:</div>
-    <div style="display:flex; gap:6px;">
+<div class="resultSection">
+
+    <h2>5 bit vừa nhập:</h2>
+    <div style="display:flex; gap:6px; margin-botom:50px;">
         <input type="text" class="originalBox" readonly>
         <input type="text" class="originalBox" readonly>
         <input type="text" class="originalBox" readonly>
@@ -154,9 +159,10 @@ button:focus {
 </div>
 
 
-    <div>
-    <div>Kết quả:</div>
-    <div id="resultBoxes" style="display:flex; gap:6px;">
+    <div class="resultSection">
+
+    <h2>Kết quả:</h2>
+    <div id="resultBoxes" style="display:flex; gap:6px;margin-botom:30px;">
         <input type="text" class="resultBox" readonly>
         <input type="text" class="resultBox" readonly>
         <input type="text" class="resultBox" readonly>
