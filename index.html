@@ -2,189 +2,124 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>Lật Bit Gọn Nhẹ</title>
+<title>So sánh 5 Bit</title>
 <style>
-* {
-    box-sizing: border-box;
-}
-
-  body {
-    background: linear-gradient(135deg, #1e1e2f, #252542);
+body{
     font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    padding-top: 40px;
-    color: #ffffff;
+    background:#1e1e2f;
+    color:white;
+    text-align:center;
+    padding:30px;
 }
 
+
+/* Hộp chính */
 .container {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255,255,255,0.05);
     padding: 30px;
-    border-radius: 16px;
-    width: 320px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(8px);
+    border-radius: 20px;
+    width: 380px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 20px rgba(0,255,255,0.2);
+    animation: glow 3s infinite alternate;
+    margin: 15px auto;
 }
 
-h2 {
-    margin-top: 0;
-    margin-bottom: 8px;
-        font-weight: 600;
+@keyframes glow {
+    from { box-shadow: 0 0 15px rgba(0,255,255,0.2); }
+    to { box-shadow: 0 0 30px rgba(0,255,255,0.5); }
 }
 
-.container div {
-    margin-bottom: 18px;
-    text-align: left;
+h2, h3 {
+    text-align: center;
+    margin-bottom: 15px;
 }
 
-input {
-    width: 100%;
-    padding: 10px 12px;
-    margin-top: 6px;
-    border-radius: 8px;
-    border: 1px solid #444;
-    background-color: #2b2b3d;   /* nền tối hơn */
-    color: #ffffff;              /* chữ sáng */
-    font-weight: 600;            /* chữ đậm hơn */
-    font-size: 16px;
-    outline: none;
-    transition: 0.3s ease;
-}
 
-input::placeholder {
-    color: #bbbbbb;
-    font-weight: 400;
-}
 
-input:focus {
-    background-color: #33334d;
-    border-color: #4da6ff;
-    box-shadow: 0 0 12px rgba(77, 166, 255, 0.6);
-}
-#statusMsg {
-    transition: opacity 0.3s ease;
-    opacity: 0;
-}
-button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
+input.main {
+    width: 50%;
+    padding: 12px;
+    font-size: 18px;
+    text-align: center;
     border-radius: 10px;
     border: none;
-    cursor: pointer;
-
-    background: linear-gradient(135deg, #4da6ff, #0066ff);
-    color: #ffffff;
-    font-size: 16px;
-    font-weight: 600;
-
-    transition: all 0.25s ease;
-    box-shadow: 0 6px 15px rgba(0, 102, 255, 0.4);
-}
-
-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(0, 102, 255, 0.6);
-}
-
-button:active {
-    transform: translateY(0);
-    box-shadow: 0 4px 10px rgba(0, 102, 255, 0.4);
-}
-
-button:focus {
     outline: none;
+    margin-bottom: 15px;
+    background: rgba(255,255,255,0.1);
+    color: white;
 }
 
-.resultBox {
-    width: 45px;
-    text-align: center;
-    font-weight: 700;
-    font-size: 18px;
-}
-
-.originalBox{
-    width: 45px;
-    text-align: center;
-    font-weight: 700;
-    font-size: 18px;
-}
-
-.highlight {
-    background-color: #ffcc00;
-    color: black;
-    box-shadow: 0 0 10px #ffcc00;
-    transition: 0.3s;
-}
-.container1 {
-    display: none;
-}
-
-.resultSection {
-    margin-top: 25px;
+input.main:focus {
+    box-shadow: 0 0 10px cyan;
 }
 
 
 
+
+
+.result-box{
+    display:inline-block;
+    width:45px;
+    height:45px;
+    line-height:45px;
+    margin:5px;
+    font-size:22px;
+    border-radius:8px;
+    background:#2e2e45;
+}
+
+.highlight{
+    background:#00c896;
+    color:black;
+}
+
+.history{
+    margin-top:30px;
+    text-align:left;
+    max-width:400px;
+    margin-left:auto;
+    margin-right:auto;
+    background:#2a2a40;
+    padding:15px;
+    border-radius:10px;
+    max-height:250px;
+    overflow-y:auto;
+    font-size:14px;
+}
+.history-item{
+    margin-bottom:8px;
+    border-bottom:1px solid #444;
+    padding-bottom:5px;
+}
 </style>
 </head>
 <body>
 
 
+
+
+
 <div class="container">
-   
+<h2>So sánh 5 Bit</h2>
 
-    <div>
-    <h2>Nhập 5 bit:</h2>
-    <input 
-        type="tel" 
-        id="bitInput" 
-        maxlength="5" 
-        inputmode="numeric"
-        pattern="[0-1]*"
-        placeholder="VD: 10101">
-    </div>
-
-
-<div class="resultSection">
-
-    <h2>5 bit vừa nhập:</h2>
-    <div style="display:flex; gap:6px; margin-botom:50px;">
-        <input type="text" class="originalBox" readonly>
-        <input type="text" class="originalBox" readonly>
-        <input type="text" class="originalBox" readonly>
-        <input type="text" class="originalBox" readonly>
-        <input type="text" class="originalBox" readonly>
-    </div>
+<div>
+    A:<br>
+    <input class="main" type="text" id="A" maxlength="5" inputmode="numeric">
+</div>
+<br>
+<div>
+    B:<br>
+    <input class="main" type="text" id="B" maxlength="5" inputmode="numeric">
 </div>
 
+<h3>Kết quả C</h3>
+<div id="result"></div>
 
-    <div class="resultSection">
-
-    <h2>Kết quả:</h2>
-    <div id="resultBoxes" style="display:flex; gap:6px;margin-botom:30px;">
-        <input type="text" class="resultBox" readonly>
-        <input type="text" class="resultBox" readonly>
-        <input type="text" class="resultBox" readonly>
-        <input type="text" class="resultBox" readonly>
-        <input type="text" class="resultBox" readonly>
-    </div>
-     
-     
-     <div id="flipMessage" style="margin-top:10px; font-weight:600; color:#4da6ff;"></div>
-
-<div class="container1">
-    <div>
-        <div>Thứ tự lật (vd: 5,3,1,1,2):</div>
-        <input type="text" id="orderInput" value="5-3-1-1-2-4-5-3-1-1-2-4-5-2-4-3-1-2-4-2-3-4-2-1-2-4-1-5-3-2-5-3-1-1-2-3">
-        <button onclick="applyOrder()">Áp dụng</button>
-        <div id="statusMsg" style="margin-top:8px;font-size:14px;"></div>
-    </div>
-  </div>   
-
-
-        
+<h3>Lịch sử</h3>
+<div class="history" id="history"></div>
 </div>
+
 
 
 
@@ -192,131 +127,156 @@ button:focus {
 
 
 <script>
-let BIT_LENGTH = 5;   // 👉 đổi thành 10 hoặc 15 nếu muốn
-let flipOrder = [];
-let currentIndex = 0;
+const ruleMap = {
+    "1": 2,
+    "2": 4,
+    "3": 3,
+    "4": 5,
+    "5": 1,
+    "1-2": 2,
+    "1-3": 3,
+    "1-4": 5,
+    "1-5": 4,
+    "2-3": 1,
+    "2-4": 3,
+    "2-5": 5,
+    "3-4": 2,
+    "3-5": 4,
+    "4-5": 1,
+    "1-2-3": 3,
+    "1-2-4": 4,
+    "1-2-5": 5,
+    "1-3-5": 1,
+    "1-3-4": 5,
+    "1-4-5": 5,
+    "2-4-5": 5,
+    "2-3-4": 2,
+    "2-3-5": 3,
+    "3-4-5": 4,
+    "1-2-3-4": 5,
+    "1-2-3-5": 1,
+    "1-2-4-5": 5,
+    "1-3-4-5": 5,
+    "2-3-4-5": 2,
+     "1-2-3-4-5": 2
+};
 
-const bitInput = document.getElementById("bitInput");
-const resultBoxes = document.querySelectorAll(".resultBox");
-const orderInput = document.getElementById("orderInput");
-const statusMsg = document.getElementById("statusMsg");
-const originalBoxes = document.querySelectorAll(".originalBox");
-const flipMessage = document.getElementById("flipMessage");
 
-
-
-
-/* Cập nhật maxlength theo BIT_LENGTH */
-bitInput.setAttribute("maxlength", BIT_LENGTH);
-
-/* Áp dụng thứ tự lật */
-function applyOrder() {
-
-   flipOrder = orderInput.value
-    .split(/[-,]/)
-    .map(n => parseInt(n.trim()))
-    .filter(n => !isNaN(n) && n >= 1 && n <= BIT_LENGTH);
-
-    currentIndex = 0;
-
-    if (flipOrder.length === 0) {
-        statusMsg.innerText = "⚠ Thứ tự không hợp lệ!";
-        statusMsg.style.color = "red";
-    } else {
-        statusMsg.innerText = "✔ Đã áp dụng thứ tự mới!";
-        statusMsg.style.color = "#4da6ff";
-    }
-
-    statusMsg.style.opacity = "1";
-
-    setTimeout(() => {
-        statusMsg.style.opacity = "0";
-    }, 2000);
+function flip(bit){
+    return bit === "0" ? "1" : "0";
 }
 
-/* Xử lý nhập bit */
-bitInput.addEventListener("input", function () {
+const inputA = document.getElementById("A");
+const inputB = document.getElementById("B");
+const resultDiv = document.getElementById("result");
+const historyDiv = document.getElementById("history");
 
-    let value = this.value.trim();
+window.onload = () => {
+    inputA.focus();
+};
 
-    const regex = new RegExp(`^[01]{${BIT_LENGTH}}$`);
+function cleanInput(input){
+    input.value = input.value.replace(/[^01]/g, "");
+}
 
-    if (regex.test(value)) {
-
-        if (flipOrder.length === 0) return;
-
-        let bits = value.split("");
-
-        // 1️⃣ Copy sang 5 ô hiển thị gốc
-        for (let i = 0; i < BIT_LENGTH; i++) {
-            originalBoxes[i].value = bits[i];
-        }
-
-       // 2️⃣ Lật bit theo thứ tự
-let flipPos = flipOrder[currentIndex] - 1;
-
-let oldValue = bits[flipPos];
-bits[flipPos] = bits[flipPos] === "0" ? "1" : "0";
-let newValue = bits[flipPos];
-
-
-// Xoá highlight cũ
-resultBoxes.forEach(box => box.classList.remove("highlight"));
-
-// Highlight ô bị lật
-resultBoxes[flipPos].classList.add("highlight");
-
-// Tự xoá highlight sau 500ms
-setTimeout(() => {
-    resultBoxes[flipPos].classList.remove("highlight");
-}, 2500);
-
-
-
-
-        // 3️⃣ Hiển thị kết quả lật
-        for (let i = 0; i < BIT_LENGTH; i++) {
-            resultBoxes[i].value = bits[i];
-        }
-
-
-
-flipMessage.innerText =
-    `Đã lật vị trí: ${flipPos + 1} (${oldValue} → ${newValue})`;
-
-flipMessage.style.opacity = "1";
-
-setTimeout(() => {
-    flipMessage.style.opacity = "0";
-}, 2000);
-
-
-
-        currentIndex++;
-        if (currentIndex >= flipOrder.length) {
-            currentIndex = 0;
-        }
-
-        this.value = "";
-        this.focus();
+inputA.addEventListener("input", () => {
+    cleanInput(inputA);
+    if(inputA.value.length === 5){
+        inputB.focus();
     }
 });
 
-/* Khi load trang */
-document.addEventListener("DOMContentLoaded", function () {
-    applyOrder();   // tự áp dụng thứ tự ban đầu
-    bitInput.focus();
+inputB.addEventListener("input", () => {
+    cleanInput(inputB);
+    if(inputB.value.length === 5){
+        process();
+    }
 });
+
+
+
+
+function process(){
+    let A = inputA.value;
+    let B = inputB.value;
+
+    if(A.length !== 5 || B.length !== 5) return;
+
+    let match = [];
+    for(let i=0;i<5;i++){
+        if(A[i] === B[i]){
+            match.push(i+1);
+        }
+    }
+
+    let key = match.join("-");
+    let C = B.split("");
+    let flipPos = null;
+
+    if(ruleMap[key]){
+        flipPos = ruleMap[key];        // giữ lại vị trí lật
+        C[flipPos - 1] = flip(C[flipPos - 1]);
+    }
+
+    displayResult(C, flipPos);
+    saveHistory(A, B, C.join(""));
+   
+
+setTimeout(() => {
+    resetInputs();
+}, 500); // 0.5 giây
+
+    
+}
+
+
+
+
+
+
+
+
+function displayResult(C, flipPos){
+    resultDiv.innerHTML = "";
+
+    for(let i=0;i<5;i++){
+        let box = document.createElement("div");
+        box.className = "result-box";
+        box.textContent = C[i];
+
+        if(flipPos && i === flipPos - 1){
+            box.classList.add("highlight");
+        }
+
+        resultDiv.appendChild(box);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+function saveHistory(A, B, C){
+    let item = document.createElement("div");
+    item.className = "history-item";
+    item.textContent = `A: ${A} | B: ${B} → C: ${C}`;
+    historyDiv.prepend(item);
+}
+
+function resetInputs(){
+    inputA.value = "";
+    inputB.value = "";
+    inputA.focus();
+}
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
 
 
 
