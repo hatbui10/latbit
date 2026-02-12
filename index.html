@@ -43,7 +43,8 @@ input.main {
     font-size: 18px;
     text-align: center;
     border-radius: 10px;
-    border: 5px;
+    border: 2px solid #444;
+
     outline: none;
     margin-bottom: 15px;
     background: red;
@@ -197,8 +198,8 @@ function flip(bit){
 
 const inputA = document.getElementById("A");
 const inputB = document.getElementById("B");
-const resultDiv = document.getElementById("result");
-const historyDiv = document.getElementById("history");
+const resultBox = document.getElementById("result");
+const historyBox = document.getElementById("history");
 
 window.onload = () => {
     inputA.focus();
@@ -259,15 +260,25 @@ setTimeout(() => {
 }
 
 function resetAll() {
+
+   let resetTimer = null; // khai báo bên ngoài
+
+resetTimer = setTimeout(() => {
+    resetInputs();
+}, 500);
+
+    const boxes = resultBox.children;
+
     inputA.value = "";
     inputB.value = "";
 
-    for (let i = 0; i < 5; i++) {
-        resultBox[i].textContent = "";
-        resultBox[i].classList.remove("highlight");
+    for (let i = 0; i < boxes.length; i++) {
+        boxes[i].textContent = "";
+        boxes[i].classList.remove("highlight");
     }
 
-    historyBox.innerHTML = ""; // nếu muốn xoá cả lịch sử
+    historyBox.innerHTML = "";
+
     inputA.focus();
 }
 
@@ -278,7 +289,7 @@ function resetAll() {
 
 
 function displayResult(C, flipPos){
-    resultDiv.innerHTML = "";
+    resultBox.innerHTML = "";
 
     for(let i=0;i<5;i++){
         let box = document.createElement("div");
@@ -289,7 +300,7 @@ function displayResult(C, flipPos){
             box.classList.add("highlight");
         }
 
-        resultDiv.appendChild(box);
+        resultBox.appendChild(box);
     }
 }
 
@@ -306,7 +317,7 @@ function saveHistory(A, B, C){
     let item = document.createElement("div");
     item.className = "history-item";
     item.textContent = `A: ${A} | B: ${B} → C: ${C}`;
-    historyDiv.prepend(item);
+    historyBox.prepend(item);
 }
 
 function resetInputs(){
