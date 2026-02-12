@@ -134,16 +134,25 @@ input.main:focus {
 <div class="container">
 <h2>A và B là 2 chuỗi 5 bit liên tiếp đứng cạnh nhau</h2>
 <h3> ví dụ 01234-56789, hoặc 56789-01234</h3>
+
+
+
 <div>
     A:<br>
     <input class="main" type="text" id="A" maxlength="5" inputmode="numeric">
 </div>
 <br>
+
 <div>
-    B:<br>
-    <input class="main" type="text" id="B" maxlength="5" inputmode="numeric">
+    D:<br>
+    <input class="main" type="text" id="D" maxlength="5" inputmode="numeric" readonly>
 </div>
 
+
+<div>
+    B:<br>
+    <input class="main" type="text" id="B" maxlength="5" inputmode="numeric" readonly>
+</div>
 
 
 
@@ -214,9 +223,12 @@ function flip(bit){
 }
 
 const inputA = document.getElementById("A");
+const inputD = document.getElementById("D");
 const inputB = document.getElementById("B");
 const resultBox = document.getElementById("result");
 const historyBox = document.getElementById("history");
+
+let hasFirstInput = false;
 
 window.onload = () => {
     inputA.focus();
@@ -228,15 +240,22 @@ function cleanInput(input){
 
 inputA.addEventListener("input", () => {
     cleanInput(inputA);
-    if(inputA.value.length === 5){
-        inputB.focus();
-    }
-});
 
-inputB.addEventListener("input", () => {
-    cleanInput(inputB);
-    if(inputB.value.length === 5){
-        process();
+    if(inputA.value.length === 5){
+
+        if(!hasFirstInput){
+            // Lần đầu → A sang D
+            inputD.value = inputA.value;
+            hasFirstInput = true;
+        } else {
+            // Lần sau → D sang B, A sang D
+            inputB.value = inputD.value;
+            inputD.value = inputA.value;
+
+            process(); // So D với B
+        }
+
+        inputA.value = "";
     }
 });
 
@@ -244,14 +263,14 @@ inputB.addEventListener("input", () => {
 
 
 function process(){
-    let A = inputA.value;
+    let D = inputD.value;
     let B = inputB.value;
 
-    if(A.length !== 5 || B.length !== 5) return;
+    if(D.length !== 5 || B.length !== 5) return;
 
     let match = [];
     for(let i=0;i<5;i++){
-        if(A[i] === B[i]){
+        if(D[i] === B[i]){
             match.push(i+1);
         }
     }
@@ -269,7 +288,7 @@ function process(){
 }
 
     displayResult(C, flipPos);
-    saveHistory(A, B, C.join(""));
+    saveHistory(D, B, C.join(""));
    
 
 setTimeout(() => {
@@ -278,6 +297,9 @@ setTimeout(() => {
 
     
 }
+
+
+
 
 function resetAll() {
 
@@ -333,10 +355,10 @@ function displayResult(C, flipPos){
 
 
 
-function saveHistory(A, B, C){
+function saveHistory(D, B, C){
     let item = document.createElement("div");
     item.className = "history-item";
-    item.textContent = `A: ${A} | B: ${B} → C: ${C}`;
+    item.textContent = `D: ${D} | B: ${B} → C: ${C}`;
     historyBox.prepend(item);
 }
 
@@ -345,12 +367,14 @@ function resetInputs(){
     inputB.value = "";
     inputA.focus();
 }
+
+
+
+
 </script>
 
 </body>
 </html>
-
-
 
 
 
