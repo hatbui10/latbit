@@ -32,7 +32,14 @@ input{
 <body>
 
 <h2>Nhập 2 số</h2>
-<input type="text" id="numberInput" maxlength="2" placeholder="VD: 14">
+<input 
+  type="text" 
+  id="numberInput" 
+  inputmode="numeric" 
+  pattern="[0-9]*" 
+  maxlength="2" 
+  placeholder="VD: 14">
+    
 <div id="message"></div>
 
 <script>
@@ -107,4 +114,5 @@ input.addEventListener("input", function(){
 
 </body>
 </html>
+
 
